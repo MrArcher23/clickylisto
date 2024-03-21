@@ -1,9 +1,9 @@
-import { Textarea } from '@/components/ui/textarea'
+import { Textarea } from '@/components/ui/textarea';
 
 interface Props {
-  texto: string
-  placeholder: string
-  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void
+  texto: string;
+  placeholder: string;
+  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const TextArea: React.FC<Props> = ({
@@ -12,6 +12,11 @@ export const TextArea: React.FC<Props> = ({
   handleChange,
 }) => {
   return (
-    <Textarea value={texto} placeholder={placeholder} onChange={handleChange} />
-  )
-}
+    <Textarea
+      value={texto}
+      placeholder={placeholder}
+      onChange={handleChange}
+      rows={6}
+    />
+  );
+};
