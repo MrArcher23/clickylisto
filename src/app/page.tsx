@@ -61,16 +61,38 @@ export default function Home() {
   };
 
   const textToDot = () => {
-    setTexto(
-      texto.replace(
-        /(^\s*|\.\s*)([a-z])/g,
-        (match, espacioPunto, letra) => espacioPunto + letra.toUpperCase(),
-      ),
-    );
-    posthog.capture('Convertir a Mayúscula Despues de Punto', {
+    const isAllUpperCase = texto === texto.toUpperCase();
+
+    const isCapitalized = texto
+      .split(' ')
+      .every(
+        (word) =>
+          word === word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+      );
+
+    const newText =
+      isAllUpperCase || isCapitalized
+        ? texto
+            .toLowerCase()
+            .replace(
+              /(^\s*|\.\s*)([a-z])/g,
+              (match, espacioPunto, letra) =>
+                espacioPunto + letra.toUpperCase(),
+            )
+        : texto.replace(
+            /(^\s*|\.\s*)([a-z])/g,
+            (match, espacioPunto, letra) => espacioPunto + letra.toUpperCase(),
+          );
+
+    setTexto(newText);
+
+    posthog.capture('Convertir a Mayúscula Después de Punto', {
       elemento: 'Utilidades_texto',
+      texto_fue_todo_mayusculas: isAllUpperCase,
+      texto_fue_capitalizado: isCapitalized,
     });
   };
+
   return (
     <main className="container mt-10 flex flex-col items-center gap-3 text-center md:absolute md:left-1/2 md:top-1/2 md:mt-0 md:-translate-x-1/2 md:-translate-y-1/2">
       <div className="">
