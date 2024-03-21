@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Navbar } from '@/components/navbar/NavBar'
-import './globals.css'
-import { Toaster } from '@/components/ui/sonner'
+import type { Metadata } from 'next';
+import { CSPostHogProvider } from './providers';
+import { Inter } from 'next/font/google';
+import { Navbar } from '@/components/navbar/NavBar';
+import './globals.css';
+import { Toaster } from '@/components/ui/sonner';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Click y Listo',
@@ -22,20 +23,22 @@ export const metadata: Metadata = {
     'herramientas prácticas',
     'soluciones rápidas',
   ],
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        {children}
-        <Toaster position="top-right" />
-      </body>
+      <CSPostHogProvider>
+        <body className={inter.className}>
+          <Navbar />
+          {children}
+          <Toaster position="top-right" />
+        </body>
+      </CSPostHogProvider>
     </html>
-  )
+  );
 }

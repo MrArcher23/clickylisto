@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import { ActionButton } from '@/components/ActionButton/ActionButton';
 import { TextArea } from '@/components/TextArea/TextArea';
+import posthog from 'posthog-js';
 
 export default function Home() {
   const [texto, setTexto] = useState('');
@@ -21,25 +22,42 @@ export default function Home() {
   };
 
   const copyText = () => {
-    navigator.clipboard.writeText(texto);
+    const textToCopy = texto;
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        posthog.capture('Texto Copiado', {
+          element: 'Utilidades_texto',
+          text_length: textToCopy.length,
+        });
+      })
+      .catch((err) => {
+        console.error('Error al copiar texto: ', err);
+      });
   };
 
   const clearText = () => {
     setTexto('');
+    posthog.capture('Borrar Texto', { elemento: 'Utilidades_texto' });
   };
 
   const textToUpper = () => {
     setTexto(texto.toLocaleUpperCase());
+    posthog.capture('Convertir a Mayúscula', { elemento: 'Utilidades_texto' });
   };
 
   const textToLower = () => {
     setTexto(texto.toLocaleLowerCase());
+    posthog.capture('Convertir a minúscula', { elemento: 'Utilidades_texto' });
   };
 
   const textToCapitalize = () => {
     setTexto(
       texto.toLowerCase().replace(/\b(\w)/g, (letra) => letra.toUpperCase()),
     );
+    posthog.capture('Convertir a Capitalizado', {
+      elemento: 'Utilidades_texto',
+    });
   };
 
   const textToDot = () => {
@@ -49,6 +67,9 @@ export default function Home() {
         (match, espacioPunto, letra) => espacioPunto + letra.toUpperCase(),
       ),
     );
+    posthog.capture('Convertir a Mayúscula Despues de Punto', {
+      elemento: 'Utilidades_texto',
+    });
   };
   return (
     <main className="container mt-10 flex flex-col items-center gap-3 text-center md:absolute md:left-1/2 md:top-1/2 md:mt-0 md:-translate-x-1/2 md:-translate-y-1/2">
@@ -73,6 +94,7 @@ export default function Home() {
             onClick={() => {
               clearText();
               toast.success('Texto Borrado');
+              posthog.capture('my event', { property: 'value' });
             }}
             disabled={!buttonActive || texto.trim() === ''}
           >
