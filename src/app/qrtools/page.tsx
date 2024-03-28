@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import QRCode from "qrcode.react";
 import { Download } from "lucide-react";
 import { toast } from "sonner";
@@ -15,18 +15,6 @@ export default function QrTools() {
     const { value } = event.target;
     setQrValue(value);
   };
-
-  // Generate download with use canvas and stream
-  const canvas = document.getElementById("qr-gen") as HTMLCanvasElement | null;
-  if (canvas) {
-    const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    let downloadLink = document.createElement("a");
-    downloadLink.href = pngUrl;
-    downloadLink.download = `${qrValue}.png`;
-    // Asegúrate de que `downloadLink` se añade al DOM y se simula un clic sobre él si es necesario
-  } else {
-    console.error("No se pudo encontrar el elemento canvas");
-  }
 
   const downloadQRCode = () => {
     // Generate download with use canvas and stream
