@@ -16,17 +16,34 @@ export default function QrTools() {
     setQrValue(value);
   };
 
-  const downloadQRCode = () => {
-    // Generate download with use canvas and stream
-    const canvas = document.getElementById("qr-gen");
+  // Generate download with use canvas and stream
+  const canvas = document.getElementById("qr-gen") as HTMLCanvasElement | null;
+  if (canvas) {
     const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     let downloadLink = document.createElement("a");
     downloadLink.href = pngUrl;
     downloadLink.download = `${qrValue}.png`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    // Asegúrate de que `downloadLink` se añade al DOM y se simula un clic sobre él si es necesario
+  } else {
+    console.error("No se pudo encontrar el elemento canvas");
+  }
+
+  const downloadQRCode = () => {
+    // Generate download with use canvas and stream
+    const canvas = document.getElementById("qr-gen") as HTMLCanvasElement | null;
+    if (canvas) {
+      const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      let downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      downloadLink.download = `${qrValue}.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } else {
+      console.error("No se pudo encontrar el elemento canvas");
+    }
   };
+
   return (
     <>
       <HeaderPage
