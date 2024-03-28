@@ -1,163 +1,49 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Copy, Eraser } from 'lucide-react';
-import { toast } from 'sonner';
-
-import { ActionButton } from '@/components/ActionButton/ActionButton';
-import { TextArea } from '@/components/TextArea/TextArea';
-import posthog from 'posthog-js';
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import upperTolow from "../../public/upperTolow.jpg";
+import qrTool from "../../public/QrTool.jpg";
+import { CardMain } from "@/components/CardMain";
 
 export default function Home() {
-  const [texto, setTexto] = useState('');
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTexto(event.target.value);
-  };
-
-  const [buttonActive, setbuttonActive] = useState(false);
-
-  const observerButton = (conversion: () => void) => {
-    conversion();
-    setbuttonActive(texto.trim() !== '');
-  };
-
-  const copyText = () => {
-    const textToCopy = texto;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        posthog.capture('Texto Copiado', {
-          element: 'Utilidades_texto',
-          text_length: textToCopy.length,
-        });
-      })
-      .catch((err) => {
-        console.error('Error al copiar texto: ', err);
-      });
-  };
-
-  const clearText = () => {
-    setTexto('');
-    posthog.capture('Borrar Texto', { elemento: 'Utilidades_texto' });
-  };
-
-  const textToUpper = () => {
-    setTexto(texto.toLocaleUpperCase());
-    posthog.capture('Convertir a Mayúscula', { elemento: 'Utilidades_texto' });
-  };
-
-  const textToLower = () => {
-    setTexto(texto.toLocaleLowerCase());
-    posthog.capture('Convertir a minúscula', { elemento: 'Utilidades_texto' });
-  };
-
-  const textToCapitalize = () => {
-    setTexto(
-      texto.toLowerCase().replace(/\b(\w)/g, (letra) => letra.toUpperCase()),
-    );
-    posthog.capture('Convertir a Capitalizado', {
-      elemento: 'Utilidades_texto',
-    });
-  };
-
-  const textToDot = () => {
-    const isAllUpperCase = texto === texto.toUpperCase();
-
-    const isCapitalized = texto
-      .split(' ')
-      .every(
-        (word) =>
-          word === word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
-      );
-
-    const newText =
-      isAllUpperCase || isCapitalized
-        ? texto
-            .toLowerCase()
-            .replace(
-              /(^\s*|\.\s*)([a-z])/g,
-              (match, espacioPunto, letra) =>
-                espacioPunto + letra.toUpperCase(),
-            )
-        : texto.replace(
-            /(^\s*|\.\s*)([a-z])/g,
-            (match, espacioPunto, letra) => espacioPunto + letra.toUpperCase(),
-          );
-
-    setTexto(newText);
-
-    posthog.capture('Convertir a Mayúscula Después de Punto', {
-      elemento: 'Utilidades_texto',
-      texto_fue_todo_mayusculas: isAllUpperCase,
-      texto_fue_capitalizado: isCapitalized,
-    });
-  };
+  const router = useRouter();
 
   return (
-    <main className="container mt-10 flex flex-col items-center gap-3 text-center md:absolute md:left-1/2 md:top-1/2 md:mt-0 md:-translate-x-1/2 md:-translate-y-1/2">
-      <div className="">
+    <main className="container mt-10 flex flex-col items-center gap-3 text-center">
+      <div className="mb-8">
         <h1 className="mb-1 font-mono text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-          Mayúsculas a minúsculas
+          Click y Listo
         </h1>
         <p className="text-muted-foreground max-w-2xl">
-          Optimiza tu texto:{' '}
-          <span className="font-bold">
-            convierte textos a mayúsculas o minúsculas,{' '}
-          </span>
-          capitaliza palabras y ajusta después de puntos.
+          <span className="font-bold">Herramientas prácticas al alcance de un clic</span> .
         </p>
       </div>
-      <section className="w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
-        <div className="flex justify-end gap-4 rounded-lg pb-2">
-          <ActionButton
-            variant="outline"
-            size="icon"
-            TextAction=""
-            onClick={() => {
-              clearText();
-              toast.success('Texto Borrado');
-              posthog.capture('my event', { property: 'value' });
-            }}
-            disabled={!buttonActive || texto.trim() === ''}
-          >
-            <Eraser />
-          </ActionButton>
-          <ActionButton
-            variant="outline"
-            size="icon"
-            TextAction=""
-            onClick={() => {
-              copyText();
-              toast.success('Texto Copiado');
-            }}
-            disabled={!buttonActive || texto.trim() === ''}
-          >
-            <Copy />
-          </ActionButton>
-        </div>
-        <TextArea
-          placeholder="Pega o escribe tu texto aquí"
-          texto={texto}
-          handleChange={handleChange}
+      <section className="flex-wrap gap-4 md:flex lg:flex xl:flex">
+        <CardMain
+          imageCard={upperTolow}
+          titleText="Mayúsculas a minúsculas"
+          subtitleText="Convierte tu texto"
+          onClick={() => router.push("./texttools")}
         />
-      </section>
-      <section className="mt-2 grid w-full gap-4 md:w-3/5 lg:w-3/5 lg:grid-cols-2 xl:w-3/5 mb-12">
-        <ActionButton
-          TextAction="Convertir a MAYÚSCULAS"
-          onClick={() => observerButton(textToUpper)}
+        <CardMain
+          imageCard={qrTool}
+          titleText="Generador de Códigos QR"
+          subtitleText="QR en segundos"
+          onClick={() => router.push("./qrtools")}
         />
-        <ActionButton
-          TextAction="Convertir a minúsculas"
-          onClick={() => observerButton(textToLower)}
+        {/* <CardMain
+          imageCard={upperTolow}
+          titleText="Enlace a Whatsaap"
+          subtitleText="Convierte tu texto"
+          onClick={() => router.push("./linktows")}
         />
-        <ActionButton
-          TextAction="Capitalizar Texto"
-          onClick={() => observerButton(textToCapitalize)}
-        />
-        <ActionButton
-          TextAction="MAYÚSCULAS después de punto"
-          onClick={() => observerButton(textToDot)}
-        />
+        <CardMain
+          imageCard={upperTolow}
+          titleText="Acortador de Enlaces"
+          subtitleText="Convierte tu texto"
+          onClick={() => router.push("./shortlink")}
+        /> */}
       </section>
     </main>
   );

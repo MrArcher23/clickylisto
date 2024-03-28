@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 // import { ThemeToggle } from '@/components/navbar/theme-toggle';
 
@@ -14,5 +14,5 @@ export const Navbar = async () => {
         <div className="flex items-center gap-2">{/* <ThemeToggle /> */}</div>
       </div>
     </header>
-  )
-}
+  );
+};
