@@ -1,32 +1,32 @@
-import type { Metadata } from 'next';
-import { CSPostHogProvider } from './providers';
-import { Inter } from 'next/font/google';
-import { Navbar } from '@/components/navbar/NavBar';
-import './globals.css';
-import { Toaster } from '@/components/ui/sonner';
+import type { Metadata } from "next";
+import { CSPostHogProvider } from "./providers";
+import { Inter } from "next/font/google";
+import { Navbar } from "@/components/NavBar";
+import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Click y Listo',
+  title: "Click y Listo",
   description:
-    'En ClickYListo, creemos en la magia de la simplicidad. Por eso, hemos creado un espacio donde encontrarás herramientas prácticas y fáciles de usar, diseñadas para hacerte la vida más sencilla. Desde generar códigos QR con un solo clic hasta convertir textos de mayúsculas a minúsculas en segundos, nuestras herramientas están pensadas para que puedas resolver tareas diarias de manera rápida y eficiente. En ClickYListo, cada clic te acerca a la solución que necesitas. ¡Explora nuestras herramientas y descubre cómo podemos simplificar tu día a día!.',
+    "En ClickYListo, creemos en la magia de la simplicidad. Por eso, hemos creado un espacio donde encontrarás herramientas prácticas y fáciles de usar, diseñadas para hacerte la vida más sencilla. Desde generar códigos QR con un solo clic hasta convertir textos de mayúsculas a minúsculas en segundos, nuestras herramientas están pensadas para que puedas resolver tareas diarias de manera rápida y eficiente. En ClickYListo, cada clic te acerca a la solución que necesitas. ¡Explora nuestras herramientas y descubre cómo podemos simplificar tu día a día!.",
   keywords: [
-    'herramientas en línea',
-    'generador de QR',
-    'convertidor de texto',
-    'mayúsculas a minúsculas',
-    'acortador de enlaces',
-    'generador de texto aleatorio',
-    'página de emoticones',
-    'generador de enlace WhatsApp',
-    'herramientas prácticas',
-    'soluciones rápidas',
-  ],
+    "herramientas en línea",
+    "generador de QR",
+    "convertidor de texto",
+    "mayúsculas a minúsculas",
+    "acortador de enlaces",
+    "generador de texto aleatorio",
+    "página de emoticones",
+    "generador de enlace WhatsApp",
+    "herramientas prácticas",
+    "soluciones rápidas"
+  ]
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
