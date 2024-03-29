@@ -1,13 +1,12 @@
-"use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import upperTolow from "../../public/upperTolow.jpg";
-import qrTool from "../../public/QrTool.jpg";
+import upperTolow from "@assets/images/upperTolow.jpg";
+import qrTool from "@assets/images/QrTool.jpg";
 import { CardMain } from "@/components/CardMain";
+import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <main className="container mt-10 flex flex-col items-center gap-3 text-center">
@@ -20,18 +19,23 @@ export default function Home() {
         </p>
       </div>
       <section className="flex-wrap gap-4 md:flex lg:flex xl:flex">
-        <CardMain
-          imageCard={upperTolow}
-          titleText="Mayúsculas a minúsculas"
-          subtitleText="Convierte tu texto"
-          onClick={() => router.push("./texttools")}
-        />
-        <CardMain
-          imageCard={qrTool}
-          titleText="Generador de Códigos QR"
-          subtitleText="QR en segundos"
-          onClick={() => router.push("./qrtools")}
-        />
+        <Link href={"/texttools"} prefetch>
+          <CardMain
+            imageCard={upperTolow}
+            titleText="Mayúsculas a minúsculas"
+            subtitleText="Convierte tu texto"
+            // onClick={() => router.push("./texttools")}
+          />
+        </Link>
+        <Link href={"/qrtools"} prefetch>
+          <CardMain
+            imageCard={qrTool}
+            titleText="Generador de Códigos QR"
+            subtitleText="QR en segundos"
+            // onClick={() => router.push("./qrtools")}
+          />
+        </Link>
+
         {/* <CardMain
           imageCard={upperTolow}
           titleText="Enlace a Whatsaap"

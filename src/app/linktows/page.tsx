@@ -1,9 +1,7 @@
-"use client";
-
 import React, { useState } from "react";
 import { Copy, Eraser, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
-
+import type { Metadata } from "next";
 import { ActionButton } from "@/components/ActionButton";
 import { TextArea } from "@/components/TextArea";
 import posthog from "posthog-js";
@@ -16,6 +14,11 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "Click y listo - Genera link a tu whatsapp",
+  description: "Generación Instantánea de Códigos QR"
+};
 
 export default function LinkToWs() {
   return (
