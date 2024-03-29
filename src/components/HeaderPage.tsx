@@ -24,9 +24,8 @@ export const HeaderPage: React.FC<Props> = ({
           {titleText}
         </h1>
         <p className="text-muted-foreground max-w-2xl text-sm">
-          {subTitleOne} <span className="font-bold">{subTitleBold}</span>{" "}
+          {subTitleOne} <span className="font-bold">{subTitleBold}</span> <span>{subTitleTwo}</span>
         </p>
-        <p className="text-muted-foreground max-w-2xl text-sm">{subTitleTwo}</p>
       </div>
       <section className="w-full md:w-3/5 lg:w-3/5 xl:w-3/5">{children}</section>
     </main>
