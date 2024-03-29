@@ -18,7 +18,7 @@ export default function QrTools() {
         titleText="Generación Instantánea de Códigos QR"
         subTitleOne="Escribe y observa cómo tu enlace se transforma en un código"
         subTitleBold="QR al instante."
-        subTitleTwo="Comparte información de forma rápida y mágica.">
+        subTitleTwo="Comparte tu QR de forma rápida y mágica.">
         <QRClient />
       </HeaderPage>
     </>
