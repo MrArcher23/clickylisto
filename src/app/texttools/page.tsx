@@ -19,9 +19,8 @@ export default function TextTools() {
     <>
       <HeaderPage
         titleText="Mayúsculas a minúsculas"
-        subTitleOne="Optimiza tu texto: "
-        subTitleBold="convierte textos."
-        subTitleTwo="De mayúsculas o minúsculas, capitaliza palabras y ajusta después de puntos.">
+        subTitleBold="Optimiza tu texto:"
+        subTitleTwo="Convierte entre mayúsculas y minúsculas, capitaliza palabras y corrige después de puntos.">
         <TextToolsComponent />
       </HeaderPage>
     </>
