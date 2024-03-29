@@ -5,15 +5,6 @@ import type { Metadata } from "next";
 import { ActionButton } from "@/components/ActionButton";
 import { TextArea } from "@/components/TextArea";
 import posthog from "posthog-js";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Click y listo - Genera link a tu whatsapp",
