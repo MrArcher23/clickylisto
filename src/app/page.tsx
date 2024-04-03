@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import upperTolow from "@assets/images/upperTolow.jpg";
-import qrTool from "@assets/images/QrTool.jpg";
+import upperTolow from "@assets/images/upperTolow.svg";
+import qrTool from "@assets/images/QrTool.svg";
+import iconWs from "@assets/images/whatsapp.svg";
 import { CardMain } from "@/components/CardMain";
 import Link from "next/link";
 
@@ -24,25 +25,26 @@ export default function Home() {
             imageCard={upperTolow}
             titleText="Mayúsculas a minúsculas"
             subtitleText="Convierte tu texto"
-            // onClick={() => router.push("./texttools")}
           />
         </Link>
+
         <Link href={"/qrtools"} prefetch>
           <CardMain
             imageCard={qrTool}
             titleText="Generador de Códigos QR"
             subtitleText="QR en segundos"
-            // onClick={() => router.push("./qrtools")}
+          />
+        </Link>
+
+        <Link href={"/linktows"} prefetch>
+          <CardMain
+            imageCard={iconWs}
+            titleText="Genera tu enlace a WhatsApp"
+            subtitleText="Enlace personalizado"
           />
         </Link>
 
         {/* <CardMain
-          imageCard={upperTolow}
-          titleText="Enlace a Whatsaap"
-          subtitleText="Convierte tu texto"
-          onClick={() => router.push("./linktows")}
-        />
-        <CardMain
           imageCard={upperTolow}
           titleText="Acortador de Enlaces"
           subtitleText="Convierte tu texto"
