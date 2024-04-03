@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 interface Props {
   texto: string;
   placeholder: string;
-  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const TextArea: React.FC<Props> = ({ texto, placeholder, handleChange }) => {
