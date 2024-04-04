@@ -47,11 +47,11 @@ const countryOptions = [
 ];
 
 const stepTexts = [
-  "Código de país",
+  "Código de País",
   "Número de WhatsApp",
-  "Escribe msg",
+  "Escribe Msg",
   "Click Generar Enlace",
-  "Copia o comparte"
+  "Copia o Comparte"
 ];
 
 export default function MsToWsComponent() {
