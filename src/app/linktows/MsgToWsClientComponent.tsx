@@ -46,7 +46,13 @@ const countryOptions = [
   { value: "1", label: "🇵🇷 +1", countryCode: "PR" }
 ];
 
-const stepTexts = ["Código de país", "Número de WhatsApp", "Escribe msg", "Click Generar Enlace"];
+const stepTexts = [
+  "Código de País",
+  "Número de WhatsApp",
+  "Escribe Msg",
+  "Click Generar Enlace",
+  "Copia o Comparte"
+];
 
 export default function MsToWsComponent() {
   const [message, setMessage] = useState("");
@@ -142,6 +148,11 @@ export default function MsToWsComponent() {
               className={`${showErrorBorder && !phoneNumber.trim() ? "border-red-500" : ""} `}
             />
           </div>
+          <div>
+            <p className="text-xs text-left text-muted-foreground">
+              Verifica tu código de país antes de generar el enlace
+            </p>
+          </div>
           <section className="flex justify-end">
             <TextArea
               placeholder="Hola me gustaría contratar tus servicios de marketing.."
@@ -167,8 +178,7 @@ export default function MsToWsComponent() {
             onClick={() => {
               handleGenerateLink();
             }}>
-            {/* // disabled={!phoneNumber || !message} */}
-            <Link />
+            <Link className="ml-2" />
           </ActionButton>
           <section className="flex justify-end">
             <Input readOnly value={generatedLink} placeholder="" />
