@@ -17,7 +17,7 @@ import {
 import { TextArea } from "@/components/TextArea";
 import posthog from "posthog-js";
 import { toast } from "sonner";
-import { Link, Copy, Eraser } from "lucide-react";
+import { Link, Copy, Eraser, Share2 } from "lucide-react";
 
 const countryOptions = [
   { value: "1", label: "🇺🇸 +1", countryCode: "US" },
@@ -46,12 +46,7 @@ const countryOptions = [
   { value: "1", label: "🇵🇷 +1", countryCode: "PR" }
 ];
 
-const stepTexts = [
-  "Código de país",
-  "Número de WhatsApp",
-  "Mensaje para WhatsApp",
-  "Click en 'Generar Enlace"
-];
+const stepTexts = ["Código de país", "Número de WhatsApp", "Escribe msg", "Click Generar Enlace"];
 
 export default function MsToWsComponent() {
   const [message, setMessage] = useState("");
@@ -59,6 +54,7 @@ export default function MsToWsComponent() {
   const defaultOption = countryOptions.find((option) => option.value === "52");
   const [countryCode, setCountryCode] = useState(defaultOption ? defaultOption.value : "");
   const [generatedLink, setGeneratedLink] = useState("");
+  const [showErrorBorder, setShowErrorBorder] = useState(false);
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value);
@@ -73,6 +69,13 @@ export default function MsToWsComponent() {
   };
 
   const handleGenerateLink = () => {
+    if (!phoneNumber.trim() || !message.trim()) {
+      setShowErrorBorder(true);
+      toast.error("Por favor, completa todos los campos.");
+      return;
+    }
+    setShowErrorBorder(false);
+
     const encodedMessage = encodeURIComponent(message);
     const link = `https://wa.me/${countryCode}${phoneNumber}?text=${encodedMessage}`;
     setGeneratedLink(link);
@@ -106,10 +109,10 @@ export default function MsToWsComponent() {
     <>
       <div className="">
         <div className="grid gap-2">
-          <section className="flex flex-wrap justify-between gap-2">
+          <section className="flex flex-wrap justify-stretch gap-2">
             {stepTexts.map((text, index) => (
               <Badge key={index} variant="secondary">
-                {index + 1}.- {text}
+                {index + 1}. {text}
               </Badge>
             ))}
           </section>
@@ -135,14 +138,16 @@ export default function MsToWsComponent() {
               type="number"
               value={phoneNumber}
               onChange={handlePhoneChange}
-              placeholder="5544332211"
+              placeholder="Escribe tu numero de WhatsApp aquí"
+              className={`${showErrorBorder && !phoneNumber.trim() ? "border-red-500" : ""} `}
             />
           </div>
           <section className="flex justify-end">
             <TextArea
-              placeholder="Hola me gustaria contratar tus servicios de marketing.."
+              placeholder="Hola me gustaría contratar tus servicios de marketing.."
               texto={message}
               handleChange={handleChange}
+              className={`${showErrorBorder && !message.trim() ? "border-red-500" : ""} `}
             />
             <ActionButton
               className="absolute"
@@ -161,23 +166,39 @@ export default function MsToWsComponent() {
             TextAction="Generar Enlace"
             onClick={() => {
               handleGenerateLink();
-            }}
-            disabled={!phoneNumber || !message}>
+            }}>
+            {/* // disabled={!phoneNumber || !message} */}
             <Link />
           </ActionButton>
           <section className="flex justify-end">
             <Input readOnly value={generatedLink} placeholder="" />
-            <ActionButton
-              className="absolute"
-              variant="outline"
-              size="icon"
-              TextAction=""
-              onClick={() => {
-                copyText();
-              }}
-              disabled={!generatedLink.trim()}>
-              <Copy />
-            </ActionButton>
+            <div className="flex gap-1 absolute">
+              <ActionButton
+                className=""
+                variant="outline"
+                size="icon"
+                TextAction=""
+                onClick={() => {
+                  copyText();
+                }}
+                disabled={!generatedLink.trim()}>
+                <Copy />
+              </ActionButton>
+              <ActionButton
+                className=""
+                variant="outline"
+                size="icon"
+                TextAction=""
+                onClick={() => {
+                  navigator.share({
+                    url: generatedLink,
+                    text: "Da click para enviar mensaje"
+                  });
+                }}
+                disabled={!generatedLink.trim()}>
+                <Share2 />
+              </ActionButton>
+            </div>
           </section>
         </div>
       </div>
