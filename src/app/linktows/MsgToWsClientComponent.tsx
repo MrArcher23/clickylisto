@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Step, countryCodes } from "@/app/utils/typesall/types";
 
 import { ActionButton } from "@/components/ActionButton";
 import { Input } from "@/components/ui/input";
@@ -18,56 +19,45 @@ import { TextArea } from "@/components/TextArea";
 import posthog from "posthog-js";
 import { toast } from "sonner";
 import { Link, Copy, Eraser, Share2 } from "lucide-react";
-
-const countryOptions = [
-  { value: "1", label: "🇺🇸 +1", countryCode: "US" },
-  { value: "52", label: "🇲🇽 +52", countryCode: "MX" },
-  { value: "34", label: "🇪🇸 +34", countryCode: "ES" },
-  { value: "54", label: "🇦🇷 +54", countryCode: "AR" },
-  { value: "55", label: "🇧🇷 +55", countryCode: "BR" },
-  { value: "56", label: "🇨🇱 +56", countryCode: "CL" },
-  { value: "57", label: "🇨🇴 +57", countryCode: "CO" },
-  { value: "58", label: "🇻🇪 +58", countryCode: "VE" },
-  { value: "51", label: "🇵🇪 +51", countryCode: "PE" },
-  { value: "593", label: "🇪🇨 +593", countryCode: "EC" },
-  { value: "591", label: "🇧🇴 +591", countryCode: "BO" },
-  { value: "595", label: "🇵🇾 +595", countryCode: "PY" },
-  { value: "598", label: "🇺🇾 +598", countryCode: "UY" },
-  { value: "507", label: "🇵🇦 +507", countryCode: "PA" },
-  { value: "506", label: "🇨🇷 +506", countryCode: "CR" },
-  { value: "503", label: "🇸🇻 +503", countryCode: "SV" },
-  { value: "502", label: "🇬🇹 +502", countryCode: "GT" },
-  { value: "501", label: "🇧🇿 +501", countryCode: "BZ" },
-  { value: "505", label: "🇳🇮 +505", countryCode: "NI" },
-  { value: "504", label: "🇭🇳 +504", countryCode: "HN" },
-  { value: "509", label: "🇭🇹 +509", countryCode: "HT" },
-  { value: "1", label: "🇩🇴 +1", countryCode: "DO" },
-  { value: "53", label: "🇨🇺 +53", countryCode: "CU" },
-  { value: "1", label: "🇵🇷 +1", countryCode: "PR" }
-];
-
-const stepTexts = [
-  "Código de País",
-  "Número de WhatsApp",
-  "Escribe Msg",
-  "Click Generar Enlace",
-  "Copia o Comparte"
-];
+import { countrycodes } from "../utils/data/countrycode/data";
 
 export default function MsToWsComponent() {
   const [message, setMessage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const defaultOption = countryOptions.find((option) => option.value === "52");
-  const [countryCode, setCountryCode] = useState(defaultOption ? defaultOption.value : "");
+  const defaultCountry = countrycodes.find((code) => code.value === "52");
+  const [countryCode, setCountryCode] = useState<countryCodes | undefined>(defaultCountry);
+  // const [countryCode, setCountryCode] = useState(defaultOption ? defaultOption.value : "");
   const [generatedLink, setGeneratedLink] = useState("");
   const [showErrorBorder, setShowErrorBorder] = useState(false);
+  const [steps, setSteps] = useState<Step[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/utils/data/stepsmsg");
+      const data = await response.json();
+      setSteps(data);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/utils/data/countrycode");
+      const data = await response.json();
+      setCountryCode(data);
+    };
+
+    fetchData();
+  }, []);
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value);
   };
 
   const handleCountryCodeChange = (value: string) => {
-    setCountryCode(value);
+    const selectedCode = countrycodes.find((code) => code.value === value);
+    setCountryCode(selectedCode);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -83,7 +73,7 @@ export default function MsToWsComponent() {
     setShowErrorBorder(false);
 
     const encodedMessage = encodeURIComponent(message);
-    const link = `https://wa.me/${countryCode}${phoneNumber}?text=${encodedMessage}`;
+    const link = `https://wa.me/${countryCode?.value}${phoneNumber}?text=${encodedMessage}`;
     setGeneratedLink(link);
     toast.success("Tu enlace ha sido generado");
   };
@@ -116,25 +106,25 @@ export default function MsToWsComponent() {
       <div className="">
         <div className="grid gap-2">
           <section className="flex flex-wrap justify-stretch gap-2">
-            {stepTexts.map((text, index) => (
-              <Badge key={index} variant="secondary">
-                {index + 1}. {text}
+            {steps.map((step) => (
+              <Badge key={step.id} variant="secondary">
+                {step.text}
               </Badge>
             ))}
           </section>
           <div className="flex gap-2">
             <Select
-              value={countryCode}
-              defaultValue={defaultOption ? defaultOption.value : ""}
+              value={countryCode?.value}
+              defaultValue={countryCode?.value}
               onValueChange={handleCountryCodeChange}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {countryOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  {countrycodes.map((code) => (
+                    <SelectItem key={code.id} value={code.value}>
+                      {code.label}
                     </SelectItem>
                   ))}
                 </SelectGroup>
