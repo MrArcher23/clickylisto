@@ -45,7 +45,9 @@ export default function MsToWsComponent() {
     const fetchData = async () => {
       const response = await fetch("/utils/data/countrycode");
       const data = await response.json();
-      setCountryCode(data);
+      // Suponiendo que la respuesta es un array y quieres el objeto con value "52"
+      const defaultCode = data.find((code) => code.value === "52");
+      setCountryCode(defaultCode);
     };
 
     fetchData();
@@ -73,7 +75,10 @@ export default function MsToWsComponent() {
     setShowErrorBorder(false);
 
     const encodedMessage = encodeURIComponent(message);
-    const link = `https://wa.me/${countryCode?.value}${phoneNumber}?text=${encodedMessage}`;
+    // Comprueba si countryCode es un objeto y tiene la propiedad 'value'.
+    const fullPhoneNumber =
+      countryCode && countryCode.value ? `${countryCode.value}${phoneNumber}` : phoneNumber;
+    const link = `https://wa.me/${fullPhoneNumber}?text=${encodedMessage}`;
     setGeneratedLink(link);
     toast.success("Tu enlace ha sido generado");
   };
