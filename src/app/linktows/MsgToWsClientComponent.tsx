@@ -24,7 +24,7 @@ import { countrycodes } from "../utils/data/countrycode/data";
 export default function MsToWsComponent() {
   const [message, setMessage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const defaultCountry = countrycodes.find((code) => code.value === "52");
+  const defaultCountry = countrycodes.find((code: countryCodes) => code.value === "52");
   const [countryCode, setCountryCode] = useState<countryCodes | undefined>(defaultCountry);
   // const [countryCode, setCountryCode] = useState(defaultOption ? defaultOption.value : "");
   const [generatedLink, setGeneratedLink] = useState("");
@@ -44,7 +44,7 @@ export default function MsToWsComponent() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/utils/data/countrycode");
-      const data = await response.json();
+      const data: countryCodes[] = await response.json();
       // Suponiendo que la respuesta es un array y quieres el objeto con value "52"
       const defaultCode = data.find((code) => code.value === "52");
       setCountryCode(defaultCode);
