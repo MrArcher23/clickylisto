@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import upperTolow from "@assets/images/upperTolow.svg";
 import qrTool from "@assets/images/QrTool.svg";
 import iconWs from "@assets/images/whatsapp.svg";
+import imageTool from "@assets/images/image-tool.svg";
 import { CardMain } from "@/components/CardMain";
 import Link from "next/link";
 
@@ -44,6 +45,13 @@ export default function Home() {
           />
         </Link>
 
+        <Link href={"/image-tool"} prefetch>
+          <CardMain
+            imageCard={imageTool}
+            titleText="Optimizacion de imagen"
+            subtitleText="Optimiza el tamaño de tu imagen"
+          />
+        </Link>
         {/* <CardMain
           imageCard={upperTolow}
           titleText="Acortador de Enlaces"
