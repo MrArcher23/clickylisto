@@ -6,7 +6,7 @@ interface Props {
   titleText: string;
   subTitleOne?: string;
   subTitleBold: string;
-  subTitleTwo: string;
+  subTitleTwo?: string;
   children?: ReactNode;
 }
 

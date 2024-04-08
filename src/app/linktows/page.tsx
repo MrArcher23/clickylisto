@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { HeaderPage } from "@/components/HeaderPage";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";

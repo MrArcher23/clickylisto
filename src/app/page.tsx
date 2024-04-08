@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import upperTolow from "@assets/images/upperTolow.svg";
 import qrTool from "@assets/images/QrTool.svg";
 import iconWs from "@assets/images/whatsapp.svg";
+import passGen from "@assets/images/password.svg";
 import { CardMain } from "@/components/CardMain";
 import Link from "next/link";
 
@@ -41,6 +41,14 @@ export default function Home() {
             imageCard={iconWs}
             titleText="Genera tu enlace a WhatsApp"
             subtitleText="Enlace personalizado"
+          />
+        </Link>
+
+        <Link href={"/passwordgen"} prefetch>
+          <CardMain
+            imageCard={passGen}
+            titleText="Contraseñas Seguras"
+            subtitleText="Genere contraseñas seguras"
           />
         </Link>
 
