@@ -17,7 +17,7 @@ export default function PassGenClientComponent() {
   const [passwordLength, setPasswordLength] = useState(8);
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
-  const [generatedPassword, setGeneratedPassword] = useState("");
+  const [generatedPasswordResult, setGeneratedPasswordResult] = useState("");
 
   // Función para generar la contraseña aleatoria
   const generatePassword = () => {
@@ -35,7 +35,7 @@ export default function PassGenClientComponent() {
       const randomIndex = Math.floor(Math.random() * characters.length);
       password += characters[randomIndex];
     }
-    setGeneratedPassword(password);
+    setGeneratedPasswordResult(password);
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function PassGenClientComponent() {
   }, [passwordLength, includeSpecialChars]);
 
   const copyText = () => {
-    const textToCopy = generatedPassword;
+    const textToCopy = generatedPasswordResult;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -62,7 +62,7 @@ export default function PassGenClientComponent() {
       <div className="">
         <div className="grid gap-2">
           <section className="flex justify-end">
-            <Input className="text-xl" readOnly value={generatedPassword} placeholder="" />
+            <Input className="text-2xl" readOnly value={generatedPasswordResult} placeholder="" />
             <div className="flex gap-1 absolute">
               <ActionButton
                 className=""
@@ -72,7 +72,7 @@ export default function PassGenClientComponent() {
                 onClick={() => {
                   copyText();
                 }}
-                disabled={!generatedPassword.trim()}>
+                disabled={!generatedPasswordResult.trim()}>
                 <Copy />
               </ActionButton>
               <ActionButton
@@ -80,15 +80,15 @@ export default function PassGenClientComponent() {
                 size="icon"
                 onClick={() => {
                   navigator.share({
-                    url: generatedPassword,
-                    text: "Tu contraseña es: "
+                    title: "Tu contraseña es: ",
+                    text: "tu contraseña es: " + generatedPasswordResult
                   });
                 }}>
                 <Share2 />
               </ActionButton>
             </div>
           </section>
-          <section>
+          <section className="grid gap-2">
             <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
               <div className="text-left space-y-0.5">
                 <h1>Incluir Simbolos</h1>
@@ -109,13 +109,13 @@ export default function PassGenClientComponent() {
             <div className="flex-col items-center justify-between rounded-lg border p-3 shadow-sm">
               <div className="flex justify-between text-left space-y-0.5 mb-4">
                 <div>
-                  <h1>Longitud de la contrasena</h1>
+                  <h1>Longitud de la contraseña</h1>
                   <p className="text-xs text-muted-foreground">
-                    {`Simbolos a usar: !@#$%^&*()_+{}:"<>?[];,./~`}
+                    Una longitud mayor significa una seguridad más robusta.
                   </p>
                 </div>
                 <div>
-                  <Badge>{passwordLength}</Badge>
+                  <Badge className="text-lg">{passwordLength}</Badge>
                 </div>
               </div>
               <div>
