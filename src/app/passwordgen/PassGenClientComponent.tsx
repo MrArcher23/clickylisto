@@ -38,11 +38,6 @@ export default function PassGenClientComponent() {
     setGeneratedPassword(password);
   };
 
-  // Generar una contraseña inicial al cargar el componente
-  useState(() => {
-    generatePassword();
-  }, []);
-
   useEffect(() => {
     generatePassword();
   }, [passwordLength, includeSpecialChars]);
