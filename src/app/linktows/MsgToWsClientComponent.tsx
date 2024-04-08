@@ -24,9 +24,9 @@ import { countrycodes } from "../utils/data/countrycode/data";
 export default function MsToWsComponent() {
   const [message, setMessage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const defaultCountry = countrycodes.find((code: countryCodes) => code.value === "52");
-  const [countryCode, setCountryCode] = useState<countryCodes | undefined>(defaultCountry);
-  // const [countryCode, setCountryCode] = useState(defaultOption ? defaultOption.value : "");
+  // const defaultCountry = countrycodes.find((code: countryCodes) => code.value === "52");
+  // const [countryCode, setCountryCode] = useState<countryCodes | undefined>(defaultCountry);
+  const [countryCode, setCountryCode] = useState<countryCodes | undefined>();
   const [generatedLink, setGeneratedLink] = useState("");
   const [showErrorBorder, setShowErrorBorder] = useState(false);
   const [steps, setSteps] = useState<Step[]>([]);
@@ -98,6 +98,7 @@ export default function MsToWsComponent() {
       });
     toast.success("Enlace Copiado");
   };
+
   const clearText = () => {
     setPhoneNumber("");
     setMessage("");
