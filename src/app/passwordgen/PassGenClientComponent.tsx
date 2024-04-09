@@ -8,13 +8,13 @@ import { Switch } from "@/components/ui/switch";
 
 import posthog from "posthog-js";
 import { toast } from "sonner";
-import { Copy, Share2 } from "lucide-react";
+import { Copy, RefreshCcw, Share2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
 type SliderProps = React.ComponentProps<typeof Slider>;
 
 export default function PassGenClientComponent() {
-  const [passwordLength, setPasswordLength] = useState(8);
+  const [passwordLength, setPasswordLength] = useState(14);
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
   const [generatedPasswordResult, setGeneratedPasswordResult] = useState("");
@@ -59,9 +59,9 @@ export default function PassGenClientComponent() {
   };
   return (
     <>
-      <div className="">
-        <div className="grid gap-2">
-          <section className="flex justify-end">
+      <div className="grid gap-4">
+        <div className="grid gap-2 md:flex">
+          <section className="flex w-full justify-end">
             <Input className="text-2xl" readOnly value={generatedPasswordResult} placeholder="" />
             <div className="flex gap-1 absolute">
               <ActionButton
@@ -88,52 +88,61 @@ export default function PassGenClientComponent() {
               </ActionButton>
             </div>
           </section>
-          <section className="grid gap-2">
-            <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-              <div className="text-left space-y-0.5">
-                <h1>Incluir Simbolos</h1>
+          <div>
+            <ActionButton
+              className="w-full"
+              TextAction="Generar Nueva Contraseña"
+              onClick={() => generatePassword()}>
+              <RefreshCcw className="ml-2" />
+            </ActionButton>
+          </div>
+        </div>
+        <section className="grid gap-2">
+          <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+            <div className="text-left space-y-0.5">
+              <h1>Incluir Simbolos</h1>
+              <p className="text-xs text-muted-foreground">
+                {`Símbolos a usar aleatorios: !@#$%^&*()_+{}:"<>?[];,./~`}
+              </p>
+            </div>
+            <div>
+              <Switch
+                checked={includeSpecialChars}
+                onCheckedChange={(checked) => {
+                  setIncludeSpecialChars(checked);
+                  generatePassword();
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex-col items-center justify-between rounded-lg border p-3 shadow-sm">
+            <div className="flex justify-between text-left space-y-0.5 mb-4">
+              <div>
+                <h1>Longitud de la contraseña</h1>
                 <p className="text-xs text-muted-foreground">
-                  {`Simbolos a usar: !@#$%^&*()_+{}:"<>?[];,./~`}
+                  Una longitud mayor significa una seguridad más robusta.
                 </p>
               </div>
               <div>
-                <Switch
-                  checked={includeSpecialChars}
-                  onCheckedChange={(checked) => {
-                    setIncludeSpecialChars(checked);
-                    generatePassword();
-                  }}
-                />
+                <Badge className="text-lg">{passwordLength}</Badge>
               </div>
             </div>
-            <div className="flex-col items-center justify-between rounded-lg border p-3 shadow-sm">
-              <div className="flex justify-between text-left space-y-0.5 mb-4">
-                <div>
-                  <h1>Longitud de la contraseña</h1>
-                  <p className="text-xs text-muted-foreground">
-                    Una longitud mayor significa una seguridad más robusta.
-                  </p>
-                </div>
-                <div>
-                  <Badge className="text-lg">{passwordLength}</Badge>
-                </div>
-              </div>
-              <div>
-                <Slider
-                  defaultValue={[8]}
-                  min={8}
-                  max={32}
-                  step={2}
-                  onValueChange={(value) => {
-                    setPasswordLength(value[0]);
-                    generatePassword();
-                  }}
-                />
-              </div>
+            <div>
+              <Slider
+                defaultValue={[14]}
+                min={8}
+                max={32}
+                step={2}
+                onValueChange={(value) => {
+                  setPasswordLength(value[0]);
+                  generatePassword();
+                }}
+              />
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
     </>
   );
 }
+5;

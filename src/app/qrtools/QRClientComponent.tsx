@@ -33,7 +33,7 @@ export default function QRClientComponent() {
 
   return (
     <>
-      <div className="flex-1 md:flex gap-8">
+      <div className="grid gap-2 md:flex">
         <Input onChange={handleOnChange} placeholder="Escribe o pega tu enlace aquí" />
         <div>
           <ActionButton
@@ -44,7 +44,7 @@ export default function QRClientComponent() {
               downloadQRCode();
               toast.success("Tu Qr ha sido generado");
             }}>
-            <Download />
+            <Download className="ml-2" />
           </ActionButton>
         </div>
       </div>
