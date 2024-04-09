@@ -7,7 +7,7 @@ interface Props {
   onClick?: () => void;
   className?: string;
   children?: ReactNode;
-  TextAction: string;
+  TextAction?: string;
   disabled?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   size?: VariantProps<typeof buttonVariants>["size"];
