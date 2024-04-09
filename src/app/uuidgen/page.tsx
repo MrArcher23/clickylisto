@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Generador de Contraseñas Seguras",
+  title: "Generador de UUID",
   description:
     "Crea identificadores únicos universales (UUID) de forma segura y aleatoria con nuestro generador de UUID en ClickyListo. Ideal para desarrolladores y profesionales de TI que necesitan UUIDs para proyectos de software, bases de datos y más. Genera y copia UUIDs al instante con un solo clic."
 };
