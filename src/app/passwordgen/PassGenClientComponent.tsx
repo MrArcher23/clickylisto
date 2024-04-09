@@ -48,7 +48,7 @@ export default function PassGenClientComponent() {
       .writeText(textToCopy)
       .then(() => {
         posthog.capture("Contraseña Copiada", {
-          element: "Utilidades_texto",
+          element: "Utilidades_seguridad",
           text_length: textToCopy.length
         });
       })
