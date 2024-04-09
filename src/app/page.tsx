@@ -3,6 +3,7 @@ import upperTolow from "@assets/images/upperTolow.svg";
 import qrTool from "@assets/images/QrTool.svg";
 import iconWs from "@assets/images/whatsapp.svg";
 import passGen from "@assets/images/password.svg";
+import uuidCode from "@assets/images/binary-code.svg";
 import { CardMain } from "@/components/CardMain";
 import Link from "next/link";
 
@@ -49,6 +50,14 @@ export default function Home() {
             imageCard={passGen}
             titleText="Contraseñas Seguras"
             subtitleText="Genere contraseñas seguras"
+          />
+        </Link>
+
+        <Link href={"/uuidgen"} prefetch>
+          <CardMain
+            imageCard={uuidCode}
+            titleText="Genera UUID  "
+            subtitleText="Universally Unique Identifiers"
           />
         </Link>
 
