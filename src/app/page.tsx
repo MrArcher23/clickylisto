@@ -4,6 +4,7 @@ import qrTool from "@assets/images/QrTool.svg";
 import iconWs from "@assets/images/whatsapp.svg";
 import imageTool from "@assets/images/image-tool.svg";
 import passGen from "@assets/images/password.svg";
+import uuidCode from "@assets/images/binary-code.svg";
 import { CardMain } from "@/components/CardMain";
 import Link from "next/link";
 
@@ -52,6 +53,13 @@ export default function Home() {
             subtitleText="Genere contraseñas seguras"
           />
         </Link>
+        <Link href={"/uuidgen"} prefetch>
+          <CardMain
+            imageCard={uuidCode}
+            titleText="Genera UUID  "
+            subtitleText="Universally Unique Identifiers"
+          />
+        </Link>
         <Link href={"/image-tool"} prefetch>
           <CardMain
             imageCard={imageTool}
@@ -59,6 +67,7 @@ export default function Home() {
             subtitleText="Optimiza el tamaño de tu imagen"
           />
         </Link>
+
         {/* <CardMain
           imageCard={upperTolow}
           titleText="Acortador de Enlaces"
