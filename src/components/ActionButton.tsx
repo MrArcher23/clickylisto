@@ -11,6 +11,7 @@ interface Props {
   disabled?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   size?: VariantProps<typeof buttonVariants>["size"];
+  type?: "button" | "submit" | "reset";
 }
 
 export const ActionButton: React.FC<Props> = ({
@@ -20,6 +21,7 @@ export const ActionButton: React.FC<Props> = ({
   disabled,
   variant,
   size,
+  type = "button",
   children
 }) => {
   return (
