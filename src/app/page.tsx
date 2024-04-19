@@ -5,6 +5,7 @@ import iconWs from "@assets/images/whatsapp.svg";
 import imageTool from "@assets/images/image-tool.svg";
 import passGen from "@assets/images/password.svg";
 import uuidCode from "@assets/images/binary-code.svg";
+import shortLink from "@assets/images/link.svg";
 import { CardMain } from "@/components/CardMain";
 import Link from "next/link";
 
@@ -33,7 +34,7 @@ export default function Home() {
         <Link href={"/qrtools"} prefetch>
           <CardMain
             imageCard={qrTool}
-            titleText="Generador de Códigos QR"
+            titleText="Generador de códigos QR"
             subtitleText="QR en segundos"
           />
         </Link>
@@ -49,7 +50,7 @@ export default function Home() {
         <Link href={"/passwordgen"} prefetch>
           <CardMain
             imageCard={passGen}
-            titleText="Contraseñas Seguras"
+            titleText="Contraseñas seguras"
             subtitleText="Genere contraseñas seguras"
           />
         </Link>
@@ -64,7 +65,14 @@ export default function Home() {
           <CardMain
             imageCard={imageTool}
             titleText="Optimizacion de imagen"
-            subtitleText="Optimiza el tamaño de tu imagen"
+            subtitleText="Optimiza JPG, PNG, etc."
+          />
+        </Link>
+        <Link href={"/shortlink"} prefetch>
+          <CardMain
+            imageCard={shortLink}
+            titleText="Acortador de enlaces"
+            subtitleText="Acorta tu URL"
           />
         </Link>
 
