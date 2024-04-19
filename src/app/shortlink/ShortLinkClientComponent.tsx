@@ -102,8 +102,7 @@ export default function ShortLinkClientComponent() {
               TextAction=""
               onClick={() => {
                 navigator.share({
-                  url: shortenedLink,
-                  text: "Da click para enviar mensaje"
+                  url: shortenedLink
                 });
               }}
               disabled={!shortenedLink.trim()}>
