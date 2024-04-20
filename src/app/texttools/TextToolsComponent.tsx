@@ -6,10 +6,12 @@ import posthog from "posthog-js";
 import { ActionButton } from "@/components/ActionButton";
 import { TextArea } from "@/components/TextArea";
 import { toast } from "sonner";
+import { useClipboard } from "../utils/useUtilityHooks";
 
 export default function TextToolsComponent() {
   const [texto, setTexto] = useState("");
   const [buttonActive, setbuttonActive] = useState(false);
+  const { copyText } = useClipboard();
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTexto(event.target.value);
@@ -18,21 +20,6 @@ export default function TextToolsComponent() {
   const observerButton = (conversion: () => void) => {
     conversion();
     setbuttonActive(texto.trim() !== "");
-  };
-
-  const copyText = () => {
-    const textToCopy = texto;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        posthog.capture("Texto Copiado", {
-          element: "Utilidades_texto",
-          text_length: textToCopy.length
-        });
-      })
-      .catch((err) => {
-        console.error("Error al copiar texto: ", err);
-      });
   };
 
   const clearText = () => {
@@ -90,7 +77,6 @@ export default function TextToolsComponent() {
         <ActionButton
           variant="outline"
           size="icon"
-          TextAction=""
           onClick={() => {
             clearText();
             toast.success("Texto Borrado");
@@ -104,10 +90,8 @@ export default function TextToolsComponent() {
         <ActionButton
           variant="outline"
           size="icon"
-          TextAction=""
           onClick={() => {
-            copyText();
-            toast.success("Texto Copiado");
+            copyText(texto);
           }}
           disabled={!buttonActive || texto.trim() === ""}>
           <Copy />

@@ -3,12 +3,15 @@
 import React, { useState } from "react";
 import { ActionButton } from "@/components/ActionButton";
 import { Input } from "@/components/ui/input";
+import { useShare, useClipboard } from "../utils/useUtilityHooks";
 
 import posthog from "posthog-js";
 import { toast } from "sonner";
 import { Copy, RefreshCcw, Share2, Eraser } from "lucide-react";
 
 export default function ShortLinkClientComponent() {
+  const { copyText } = useClipboard();
+  const { shareLink } = useShare();
   const [link, setLink] = useState("");
   const [shortenedLink, setShortenedLink] = useState("");
   const [lastSentLink, setLastSentLink] = useState("");
@@ -42,22 +45,6 @@ export default function ShortLinkClientComponent() {
     }
   };
 
-  const copyShortLink = () => {
-    const textToCopy = shortenedLink;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        posthog.capture("Enlace Copiado", {
-          element: "Utilidades",
-          text_length: textToCopy.length
-        });
-      })
-      .catch((err) => {
-        console.error("Error al copiar el link: ", err);
-      });
-    toast.success("Enlace Copiado");
-  };
-
   const clearText = () => {
     setLink("");
     setShortenedLink("");
@@ -79,7 +66,6 @@ export default function ShortLinkClientComponent() {
             className="absolute"
             variant="outline"
             size="icon"
-            TextAction=""
             onClick={() => {
               clearText();
             }}
@@ -96,25 +82,19 @@ export default function ShortLinkClientComponent() {
           />
           <div className="flex gap-1 absolute">
             <ActionButton
-              className=""
               variant="outline"
               size="icon"
-              TextAction=""
               onClick={() => {
-                navigator.share({
-                  url: shortenedLink
-                });
+                shareLink(shortenedLink);
               }}
               disabled={!shortenedLink.trim()}>
               <Share2 />
             </ActionButton>
             <ActionButton
-              className=""
               variant="outline"
               size="icon"
-              TextAction=""
               onClick={() => {
-                copyShortLink();
+                copyText(shortenedLink);
               }}>
               <Copy />
             </ActionButton>
