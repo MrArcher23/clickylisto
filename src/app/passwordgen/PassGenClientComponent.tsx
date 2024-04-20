@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useClipboard, useShare } from "../utils/useUtilityHooks";
 import { ActionButton } from "@/components/ActionButton";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +19,8 @@ export default function PassGenClientComponent() {
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
   const [generatedPasswordResult, setGeneratedPasswordResult] = useState("");
+  const { copyText } = useClipboard();
+  const { shareLink } = useShare();
 
   // Función para generar la contraseña aleatoria
   const generatePassword = () => {
@@ -42,21 +45,6 @@ export default function PassGenClientComponent() {
     generatePassword();
   }, [passwordLength, includeSpecialChars]);
 
-  const copyText = () => {
-    const textToCopy = generatedPasswordResult;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        posthog.capture("Contraseña Copiada", {
-          element: "Utilidades_seguridad",
-          text_length: textToCopy.length
-        });
-      })
-      .catch((err) => {
-        console.error("Error al copiar texto: ", err);
-      });
-    toast.success("Contraseña Copiada");
-  };
   return (
     <>
       <div className="grid gap-4">
@@ -65,12 +53,10 @@ export default function PassGenClientComponent() {
             <Input className="text-2xl" readOnly value={generatedPasswordResult} placeholder="" />
             <div className="flex gap-1 absolute">
               <ActionButton
-                className=""
                 variant="outline"
                 size="icon"
-                TextAction=""
                 onClick={() => {
-                  copyText();
+                  copyText(generatedPasswordResult);
                 }}
                 disabled={!generatedPasswordResult.trim()}>
                 <Copy />
@@ -79,10 +65,7 @@ export default function PassGenClientComponent() {
                 variant="outline"
                 size="icon"
                 onClick={() => {
-                  navigator.share({
-                    title: "Tu contraseña es: ",
-                    text: "tu contraseña es: " + generatedPasswordResult
-                  });
+                  shareLink(generatedPasswordResult);
                 }}>
                 <Share2 />
               </ActionButton>

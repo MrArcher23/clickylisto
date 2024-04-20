@@ -1,35 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import { useClipboard, useShare } from "../utils/useUtilityHooks";
 import { v4 as uuidv4 } from "uuid";
 import { ActionButton } from "@/components/ActionButton";
 import { Input } from "@/components/ui/input";
 
-import posthog from "posthog-js";
-import { toast } from "sonner";
-import { Copy, RefreshCcw } from "lucide-react";
+import { Copy, RefreshCcw, Share2 } from "lucide-react";
 
 export default function UuidGenClientComponent() {
   const [uuid, setUuid] = useState(uuidv4());
+  const { copyText } = useClipboard();
+  const { shareLink } = useShare();
 
   const generateUuid = () => {
     setUuid(uuidv4());
-  };
-
-  const copyUuid = () => {
-    const textToCopy = uuid;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        posthog.capture("UUID Copiado", {
-          element: "Utilidades_seguridad",
-          text_length: textToCopy.length
-        });
-      })
-      .catch((err) => {
-        console.error("Error al copiar el uuid: ", err);
-      });
-    toast.success("UUID Copiado");
   };
 
   return (
@@ -39,14 +24,21 @@ export default function UuidGenClientComponent() {
           <Input className="text-2xl" readOnly value={uuid} />
           <div className="flex gap-1 absolute">
             <ActionButton
-              className=""
               variant="outline"
               size="icon"
-              TextAction=""
               onClick={() => {
-                copyUuid();
+                copyText(uuid);
               }}>
               <Copy />
+            </ActionButton>
+            <ActionButton
+              variant="outline"
+              size="icon"
+              onClick={() => {
+                shareLink(uuid);
+              }}
+              disabled={!uuid.trim()}>
+              <Share2 />
             </ActionButton>
           </div>
         </section>

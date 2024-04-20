@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Step, countryCodes } from "@/app/utils/typesall/types";
+import { useClipboard, useShare } from "../utils/useUtilityHooks";
 
 import { ActionButton } from "@/components/ActionButton";
 import { Input } from "@/components/ui/input";
@@ -24,8 +25,8 @@ import { countrycodes } from "../utils/data/countrycode/data";
 export default function MsToWsComponent() {
   const [message, setMessage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const defaultCountry = countrycodes.find((code: countryCodes) => code.value === "52");
-  // const [countryCode, setCountryCode] = useState<countryCodes | undefined>(defaultCountry);
+  const { copyText } = useClipboard();
+  const { shareLink } = useShare();
   const [countryCode, setCountryCode] = useState<countryCodes | undefined>();
   const [generatedLink, setGeneratedLink] = useState("");
   const [showErrorBorder, setShowErrorBorder] = useState(false);
@@ -45,7 +46,6 @@ export default function MsToWsComponent() {
     const fetchData = async () => {
       const response = await fetch("/utils/data/countrycode");
       const data: countryCodes[] = await response.json();
-      // Suponiendo que la respuesta es un array y quieres el objeto con value "52"
       const defaultCode = data.find((code) => code.value === "52");
       setCountryCode(defaultCode);
     };
@@ -81,22 +81,6 @@ export default function MsToWsComponent() {
     const link = `https://wa.me/${fullPhoneNumber}?text=${encodedMessage}`;
     setGeneratedLink(link);
     toast.success("Tu enlace ha sido generado");
-  };
-
-  const copyText = () => {
-    const textToCopy = generatedLink;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        posthog.capture("Texto Copiado", {
-          element: "Utilidades_texto",
-          text_length: textToCopy.length
-        });
-      })
-      .catch((err) => {
-        console.error("Error al copiar texto: ", err);
-      });
-    toast.success("Enlace Copiado");
   };
 
   const clearText = () => {
@@ -160,7 +144,6 @@ export default function MsToWsComponent() {
               className="absolute"
               variant="outline"
               size="icon"
-              TextAction=""
               onClick={() => {
                 clearText();
               }}
@@ -180,26 +163,19 @@ export default function MsToWsComponent() {
             <Input readOnly value={generatedLink} placeholder="" />
             <div className="flex gap-1 absolute">
               <ActionButton
-                className=""
                 variant="outline"
                 size="icon"
-                TextAction=""
                 onClick={() => {
-                  copyText();
+                  copyText(generatedLink);
                 }}
                 disabled={!generatedLink.trim()}>
                 <Copy />
               </ActionButton>
               <ActionButton
-                className=""
                 variant="outline"
                 size="icon"
-                TextAction=""
                 onClick={() => {
-                  navigator.share({
-                    url: generatedLink,
-                    text: "Da click para enviar mensaje"
-                  });
+                  shareLink(generatedLink);
                 }}
                 disabled={!generatedLink.trim()}>
                 <Share2 />
