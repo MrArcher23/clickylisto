@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import { VariantProps } from "class-variance-authority";
 
