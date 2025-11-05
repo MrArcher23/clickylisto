@@ -83,6 +83,106 @@ export default function Home() {
           onClick={() => router.push("./shortlink")}
         /> */}
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "ClickyListo",
+            "url": "https://clickylisto.com",
+            "description": "Herramientas online gratuitas: generador de QR, convertidor de texto, generador de contraseñas, UUID, enlaces de WhatsApp, acortador de links y optimizador de imágenes.",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Web",
+            "browserRequirements": "Requires JavaScript. Requires HTML5.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "Convertidor de texto (mayúsculas/minúsculas)",
+              "Generador de códigos QR",
+              "Generador de contraseñas seguras",
+              "Generador de UUID",
+              "Generador de enlaces de WhatsApp",
+              "Acortador de enlaces",
+              "Optimizador de imágenes"
+            ],
+            "inLanguage": "es-ES"
+          })
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ClickyListo",
+            "url": "https://clickylisto.com",
+            "logo": "https://clickylisto.com/og-image.png",
+            "description": "Herramientas prácticas online gratuitas al alcance de un clic",
+            "sameAs": []
+          })
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Convertidor de Texto",
+                "url": "https://clickylisto.com/texttools"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Generador de Códigos QR",
+                "url": "https://clickylisto.com/qrtools"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Generador de Enlaces WhatsApp",
+                "url": "https://clickylisto.com/linktows"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Generador de Contraseñas",
+                "url": "https://clickylisto.com/passwordgen"
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Generador de UUID",
+                "url": "https://clickylisto.com/uuidgen"
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "name": "Optimizador de Imágenes",
+                "url": "https://clickylisto.com/image-tool"
+              },
+              {
+                "@type": "ListItem",
+                "position": 7,
+                "name": "Acortador de Enlaces",
+                "url": "https://clickylisto.com/shortlink"
+              }
+            ]
+          })
+        }}
+      />
     </main>
   );
 }

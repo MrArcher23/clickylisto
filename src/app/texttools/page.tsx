@@ -7,9 +7,41 @@ import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Click y listo - Mayúsculas a minúsculas ",
+  title: "Convertidor de Texto: Mayúsculas a Minúsculas Gratis",
   description:
-    "Optimiza tu texto: convierte textos. De mayúsculas o minúsculas, capitaliza palabras y ajusta después de puntos."
+    "Convierte texto entre mayúsculas y minúsculas al instante. Capitaliza palabras, ajusta después de puntos y optimiza tu texto fácilmente. Herramienta gratuita online sin registro.",
+  keywords: [
+    "convertidor de texto",
+    "mayúsculas a minúsculas",
+    "capitalizar texto",
+    "convertir mayúsculas",
+    "convertir minúsculas",
+    "herramienta de texto",
+    "formato de texto online"
+  ],
+  openGraph: {
+    title: "Convertidor de Texto: Mayúsculas a Minúsculas - ClickyListo",
+    description: "Convierte texto entre mayúsculas y minúsculas al instante. Capitaliza palabras y optimiza tu texto fácilmente.",
+    url: "https://clickylisto.com/texttools",
+    type: "website",
+    images: [
+      {
+        url: "/og-texttools.png",
+        width: 1200,
+        height: 630,
+        alt: "Convertidor de Texto Mayúsculas Minúsculas",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Convertidor de Texto: Mayúsculas a Minúsculas",
+    description: "Convierte texto entre mayúsculas y minúsculas al instante con ClickyListo.",
+    images: ["/twitter-texttools.png"],
+  },
+  alternates: {
+    canonical: "https://clickylisto.com/texttools",
+  },
 };
 
 const TextToolsComponent = dynamic(() => import("./TextToolsComponent"), { ssr: false });
